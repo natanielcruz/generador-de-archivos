@@ -1,6 +1,5 @@
 import openpyxl
 from openpyxl import Workbook
-from Pila import Pila
 
 class GeneradorDeArchivos:
 
@@ -26,8 +25,6 @@ class GeneradorDeArchivos:
             for celda in fila:
                 if(celda.fill.fgColor.rgb == self.colorIncial and celdaIni == 0):
                     celdaIni = celda
-
-
  
                 if(celda.column_letter == 'Y' and celda.fill.fgColor.rgb == self.colorFinal):
                     if(celda.value < 0):
@@ -35,7 +32,6 @@ class GeneradorDeArchivos:
                       fp = open(self.rutaArchivos + '\\' + celdaIni.value + ".csv", "wt")
                       fp.write(header + '\n')
 
-                      print(ws['Y'+ str(celda.row)])
                       while i < celda.row + 1:
                           reemplazar = ['None', '[', ']', '\'', '\"']
                           data = str([ws.cell(row=i, column = j).value for j in range(1, COLUM_MAX + 1)])
@@ -45,7 +41,9 @@ class GeneradorDeArchivos:
 
                           data = data.replace(',', ';')
                           fp.write(data + '\n')
+
                           i += 1
+
                     celdaIni = 0
                     fp.close()
 
