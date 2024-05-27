@@ -10,5 +10,5 @@ def main():
     generador = GeneradorDeArchivos(rutaExcel, rutaArchivos, colorNaranja, colorAmarillo)
     generador.generarArchivos()
 
-if __name__ == "__main()__":
-    main()
+
+main()

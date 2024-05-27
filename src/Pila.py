@@ -11,7 +11,6 @@ class Pila:
     def sacarDePila(self):
         if len(self.items) == 0:
             return 0
-        
         return self.items.pop()
         
     def verTope(self):
