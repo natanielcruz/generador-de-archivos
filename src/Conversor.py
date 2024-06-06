@@ -13,7 +13,7 @@ class Conversor:
                 ws.append(row)
     
         for rows in ws.iter_rows(min_row=ws.max_row, max_row=ws.max_row, min_col=1):
-            for cell in rows:
+           for cell in rows:
                 cell.font = Font(bold=True)
                 cell.fill = PatternFill(start_color="00c1f5", end_color="00c1f5", fill_type="solid")
                 cell.border = Border(top=Side(style='medium'), bottom=Side(style='medium'))
