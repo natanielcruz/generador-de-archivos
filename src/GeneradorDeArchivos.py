@@ -1,10 +1,10 @@
 import openpyxl
-from openpyxl import Workbook
+import os
+import io
+
+# Genera los archivos csv tomados del Excel. Recibe la direccion del archivo Excel y la ruta donde se guardarán los archivos.
 
 class GeneradorDeArchivos:
-
-    # Genera los archivos csv tomados del Excel. Recibe la direccion del archivo Excel y la ruta donde se guardarán los archivos.
-
     def __init__(self, rutaWb, rutaArchivos, colorInicial, colorFinal):
         self.rutaWb = rutaWb
         self.rutaArchivos = rutaArchivos
@@ -12,7 +12,10 @@ class GeneradorDeArchivos:
         self.colorFinal = colorFinal
 
     def generarArchivos(self):
-        wb = openpyxl.load_workbook(self.rutaWb, data_only=True)
+        with open(self.rutaWb, "rb") as f:
+            in_mem_file = io.BytesIO(f.read())
+
+        wb = openpyxl.load_workbook(in_mem_file, data_only=True, read_only=False)
         ws = wb.active
         COLUM_MAX = 27
         header = ('Cliente;Descripcion;D.Compensacion;N.Recibo;F.Contabilizacion;Nro.Cheque;;Imp.Valores;Imp.Documento;Descripcion;'
@@ -20,7 +23,7 @@ class GeneradorDeArchivos:
          'Saldo;Atraso;Numerales;Dias Pago;Numerales Pago;Intereses;Moneda;Cambio')
         
         celdaIni = 0
-
+         
         for fila in ws.iter_rows(max_col = COLUM_MAX + 1):
             for celda in fila:
                 if(celda.fill.fgColor.rgb == self.colorIncial and celdaIni == 0):
@@ -46,4 +49,4 @@ class GeneradorDeArchivos:
 
                     celdaIni = 0
                     fp.close()
-
+        wb.close()
