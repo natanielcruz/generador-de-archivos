@@ -4,9 +4,10 @@ from os import scandir, remove
 import json
 import os
 import sys
-import psutil
 
-def cargar_configuracion(nombreArchivo):                    # Obtiene la ruta de la configuración tanto para el ejecutable como para el archivo .py
+# Obtiene la ruta de la configuración tanto para el ejecutable como para el archivo .py
+
+def cargar_configuracion(nombreArchivo):      
    with open (os.path.join(                                 # Hace un join de la ruta completa
       os.path.dirname(sys.executable)                       # No sube de nivel el directorio, por lo que el ejecutable debe estar en la misma ubicacion que config
       if getattr(sys, "frozen", False)                      # Detecta si se trata del ejecutable o de main.py 
@@ -20,6 +21,7 @@ def main():
     config = cargar_configuracion(rutaConfiguracion)
     
     rutaExcel = config["rutaExcel"]
+    rutaExcelProcesado = config["rutaExcelProcesado"]
     rutaArchivos = config["rutaArchivos"]
     naranja = config["primerColor"]
     amarillo = config["segundoColor"]
@@ -35,8 +37,10 @@ def main():
         rutaConvertido = rutaConvertido.replace(".csv", "")
         conversor.convertir_csv_xlsx(arch.path, rutaConvertido)
         remove(arch)
-        
-    os.remove(rutaExcel) 
+
+    os.rename(rutaExcel, rutaExcelProcesado) 
      
 if __name__ == "__main__":
    main()
+
+# $pyinstaller --onefile --add-data "config/config.json;config" " src/main.py"

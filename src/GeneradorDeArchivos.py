@@ -23,8 +23,9 @@ class GeneradorDeArchivos:
          'Saldo;Atraso;Numerales;Dias Pago;Numerales Pago;Intereses;Moneda;Cambio')
         
         celdaIni = 0
-         
+
         for fila in ws.iter_rows(max_col = COLUM_MAX + 1):
+            fp = 0
             for celda in fila:
                 if(celda.fill.fgColor.rgb == self.colorIncial and celdaIni == 0):
                     celdaIni = celda
@@ -48,5 +49,6 @@ class GeneradorDeArchivos:
                           i += 1
 
                     celdaIni = 0
-                    fp.close()
+                    if (fp != 0):
+                        fp.close()
         wb.close()
