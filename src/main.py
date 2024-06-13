@@ -1,5 +1,6 @@
 from GeneradorDeArchivos import GeneradorDeArchivos
 from Conversor import Conversor
+from datetime import datetime
 from os import scandir, remove
 import json
 import os
@@ -16,6 +17,8 @@ def cargar_configuracion(nombreArchivo):
       return json.load(fp) 
 
 def main():
+    
+    fechaYHora = datetime.now()
 
     rutaConfiguracion = str("config.json")
     config = cargar_configuracion(rutaConfiguracion)
@@ -38,9 +41,10 @@ def main():
         conversor.convertir_csv_xlsx(arch.path, rutaConvertido)
         remove(arch)
 
-    os.rename(rutaExcel, rutaExcelProcesado) 
+    os.rename(rutaExcel, rutaExcelProcesado + '\\Procesado ' + fechaYHora.strftime("%d-%m-%Y %H%M") +'.xlsx') 
+    rutaExcelProcesado
      
 if __name__ == "__main__":
    main()
 
-# $pyinstaller --onefile --add-data "config/config.json;config" " src/main.py"
+# $pyinstaller --onefile --add-data "config/config.json;config" "src/main.py"
