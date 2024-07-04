@@ -17,11 +17,8 @@ class GeneradorDeArchivos:
 
         wb = openpyxl.load_workbook(in_mem_file, data_only=True, read_only=False)
         ws = wb.active
-        COLUM_MAX = 27
-        header = ('Cliente;Descripcion;D.Compensacion;N.Recibo;F.Contabilizacion;Nro.Cheque;;Imp.Valores;Imp.Documento;Descripcion;'
-         'Nro. Recibo/Factura;Factura SAP-Nro Cbte.;Banco;Descripcion;Dias;F.Base;F.Vencimiento;Imp.Aplicado;Imp.Documento;'
-         'Saldo;Atraso;Numerales;Dias Pago;Numerales Pago;Intereses;Moneda;Cambio')
-        
+        COLUM_MAX = 11
+        header = ('Cliente;Descripcion;Comprobante;N.Recibo/Factura;Dias;F.Base;F.Vencimiento;Imp.Aplicado;Imp.Documento;Atraso;Interes')        
         celdaIni = 0
 
         for fila in ws.iter_rows(max_col = COLUM_MAX + 1):
@@ -30,8 +27,8 @@ class GeneradorDeArchivos:
                 if(celda.fill.fgColor.rgb == self.colorIncial and celdaIni == 0):
                     celdaIni = celda
  
-                if(celda.column_letter == 'Y' and celda.fill.fgColor.rgb == self.colorFinal):
-                    if(celda.value < 0):
+                if(celda.column_letter == 'K' and celda.fill.fgColor.rgb == self.colorFinal):
+                    if(celda.value > 30000 and ws['J' + str(celda.row)].value > 10):
                       i = celdaIni.row
                       fp = open(self.rutaArchivos + '\\' + celdaIni.value + ".csv", "wt")
                       fp.write(header + '\n')

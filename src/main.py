@@ -42,7 +42,6 @@ def main():
         remove(arch)
 
     os.rename(rutaExcel, rutaExcelProcesado + '\\Procesado ' + fechaYHora.strftime("%d-%m-%Y %H%M") +'.xlsx') 
-    rutaExcelProcesado
      
 if __name__ == "__main__":
    main()
