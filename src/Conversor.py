@@ -2,6 +2,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, Border, Side, PatternFill
 import csv
 
+# Esta función se encarga de transformar los archivos .csv a .xlsx y cambiar su estilo.
+# El criterio tomado para el estilo es que el archivo tenga cabecera, la primer fila de datos sea naranja, la última amarilla, y las filas que se encuentran
+# luego de una fila en blanco, también deben ser naranjas.
 class Conversor:    
     def convertir_csv_xlsx(rutaArchivo, rutaConvertido):
         wb = Workbook()
